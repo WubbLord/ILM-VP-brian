@@ -2,3 +2,11 @@ __pycache__
 results
 *.lmdb
 abide
+dtd
+eurosat
+flowers102
+food101
+oxfordpets
+stanfordcars
+sun397
+ucf101
