@@ -15,8 +15,11 @@ from tools.clip import get_saparate_text_embedding, DEFAULT_TEMPLATE, ENSEMBLE_T
 from models import AdditiveVisualPrompt
 from cfg import *
 
+from pruning_utils.utils import progress_bar, train, test
+from pruning_utils.pruner import pruning_model_random, check_sparsity, pruning_model, prune_model_custom, extract_mask, remove_prune
+
 # !!! change
-torch.autograd.set_detect_anomaly(True)
+# torch.autograd.set_detect_anomaly(True)
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
@@ -25,18 +28,32 @@ if __name__ == '__main__':
     p.add_argument('--template-number', type=int, default=0)
     p.add_argument('--epoch', type=int, default=200)
     p.add_argument('--lr', type=float, default=40)
+    p.add_argument('--pratio', type=float, required=True)
+    p.add_argument('--path', required=True)
     args = p.parse_args()
 
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
     set_seed(args.seed)
-    exp = f"clip/single_tp_vp"
+    # exp = f"clip/single_tp_vp"
+    exp = f"clip_single_tp_vp_pruning/" + args.dataset + "/" + args.path
     save_path = os.path.join(results_path, exp, gen_folder_name(args))
+    pruning_ratio = args.pratio
 
     TEMPLATES = [DEFAULT_TEMPLATE] + ENSEMBLE_TEMPLATES
-    model, preprocess = clip.load("ViT-B/32")
+
+    # model, preprocess = clip.load("ViT-B/32")
+    model, preprocess = clip.load("RN50")
     convert_models_to_fp32(model)
     model.eval()
     model.requires_grad_(False)
+
+    # ---- pruning ----
+    v_net = model.visual
+    if (pruning_ratio != 0):
+        pruning_model(v_net, pruning_ratio)
+        # current_mask = extract_mask(v_net.mask)
+        remove_prune(v_net)
+
     loaders, class_names = prepare_additive_data(dataset=args.dataset, data_path=data_path, preprocess=preprocess)
     txt_emb = get_saparate_text_embedding(class_names, TEMPLATES[args.template_number], model)
     def network(x):
