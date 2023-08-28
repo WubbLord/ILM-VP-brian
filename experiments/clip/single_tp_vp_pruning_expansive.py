@@ -44,8 +44,8 @@ if __name__ == '__main__':
 
     TEMPLATES = [DEFAULT_TEMPLATE] + ENSEMBLE_TEMPLATES
 
-    # model, preprocess = clip.load("ViT-B/32")
-    model, preprocess = clip.load("RN50")
+    model, preprocess = clip.load("ViT-B/32")
+    # model, preprocess = clip.load("RN50")
     convert_models_to_fp32(model)
     model.eval()
     model.requires_grad_(False)

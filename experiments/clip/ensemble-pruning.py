@@ -138,7 +138,7 @@ for p in range(p_start, p_end+1):
         out = torch.argmax(fx, 1)
         output = torch.cat((output, out), 0)
     print("output: " + str(output))
-    total_num = y.size(0)
+    total_num = ys.size(0)
     true_num = output.eq(ys).float().sum().item()
     print("output acc: " + str(true_num/total_num))
     if (p == p_start):

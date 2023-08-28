@@ -2,13 +2,17 @@ __pycache__
 results
 *.lmdb
 abide
+cifar10
+cifar100
 dtd
 eurosat
 flowers102
 food101
+gtsrb
 oxfordpets
 stanfordcars
 sun397
+svhn
 ucf101
 nohup.out
 clip_RN50
