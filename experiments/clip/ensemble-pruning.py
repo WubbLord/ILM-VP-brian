@@ -97,8 +97,8 @@ mapping_network = network
 
 outputs = torch.tensor([], dtype=torch.int16).to(device)
 ys = torch.tensor([]).to(device)
-p_start = 3
-p_end = 4
+p_start = 0
+p_end = 9
 for p in range(p_start, p_end+1):
     
     # Load LM and VP

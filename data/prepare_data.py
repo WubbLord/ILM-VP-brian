@@ -143,7 +143,7 @@ def prepare_additive_data(dataset, data_path, preprocess):
     data_path = os.path.join(data_path, dataset)
     if dataset == "cifar10":
         train_data = datasets.CIFAR10(root = data_path, train = True, download = True, transform = preprocess)
-        test_data = datasets.CIFAR10(root = data_path, train = False, download = False, transform = preprocess)
+        test_data = datasets.CIFAR10(root = data_path, train = False, download = True, transform = preprocess)
         class_names = refine_classnames(test_data.classes)
         loaders = {
             'train': DataLoader(train_data, 128, shuffle = True, num_workers=2),
@@ -151,7 +151,7 @@ def prepare_additive_data(dataset, data_path, preprocess):
         }
     elif dataset == "cifar100":
         train_data = datasets.CIFAR100(root = data_path, train = True, download = True, transform = preprocess)
-        test_data = datasets.CIFAR100(root = data_path, train = False, download = False, transform = preprocess)
+        test_data = datasets.CIFAR100(root = data_path, train = False, download = True, transform = preprocess)
         class_names = refine_classnames(test_data.classes)
         loaders = {
             'train': DataLoader(train_data, 128, shuffle = True, num_workers=2),
@@ -159,7 +159,7 @@ def prepare_additive_data(dataset, data_path, preprocess):
         }
     elif dataset == "svhn":
         train_data = datasets.SVHN(root = data_path, split="train", download = True, transform = preprocess)
-        test_data = datasets.SVHN(root = data_path, split="test", download = False, transform = preprocess)
+        test_data = datasets.SVHN(root = data_path, split="test", download = True, transform = preprocess)
         class_names = [f'{i}' for i in range(10)]
         loaders = {
             'train': DataLoader(train_data, 128, shuffle = True, num_workers=2),

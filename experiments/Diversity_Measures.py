@@ -91,8 +91,8 @@ Q_BD = (BD.sum()-torch.diagonal(BD,0).sum())/2 * (2/no_ensemble_members/(no_ense
 print('Q_BD')
 print(Q_BD)
 
-print(CK.sum())
-print(torch.diagonal(CK,0).sum())
+# print(CK.sum())
+# print(torch.diagonal(CK,0).sum())
 
 # state_dict = {
 #     "no_ensemble_members": p_end - p_start + 1,
